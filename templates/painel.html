@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGIC - Painel de Estoque FIFO</title>
+</head>
+<body>
+    <h1>Painel Logístico FIFO - Mãos Estendidas</h1>
+    <table border="1">
+        <tr><th>Item</th><th>Saldo</th><th>Validade</th><th>Status</th></tr>
+        {% for item in itens %}
+        <tr style="background-color: {{ '#ffcccc' if item.alerta_critico else '#ffffff' }};">
+            <td>{{ item.nome }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>{{ item.validade }}</td>
+            <td>{{ '[ ! ] Vencimento Próximo' if item.alerta_critico else 'Normal' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
