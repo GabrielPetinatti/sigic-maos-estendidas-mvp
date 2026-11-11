@@ -4,19 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGIC - Painel de Estoque FIFO</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 16px; display: flex; justify-content: center; }
+        .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 480px; }
+        h1 { font-size: 18px; color: #1e293b; text-align: center; margin-bottom: 16px; }
+        .alerta-resumo { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 10px; font-size: 13px; color: #92400e; margin-bottom: 16px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; }
+        th { background-color: #f8fafc; color: #475569; text-align: left; padding: 10px 8px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 12px 8px; border-bottom: 1px solid #e2e8f0; }
+        .critico { background-color: #fee2e2; color: #991b1b; font-weight: bold; }
+        .badge-critico { display: inline-block; background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+        .badge-normal { display: inline-block; background: #16a34a; color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+        .form-box { background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .form-box h2 { font-size: 15px; margin-top: 0; color: #334155; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; min-height: 48px; background-color: #2563eb; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <h1>Painel Logístico FIFO - Mãos Estendidas</h1>
-    <table border="1">
-        <tr><th>Item</th><th>Saldo</th><th>Validade</th><th>Status</th></tr>
-        {% for item in itens %}
-        <tr style="background-color: {{ '#ffcccc' if item.alerta_critico else '#ffffff' }};">
-            <td>{{ item.nome }}</td>
-            <td>{{ item.quantidade }}</td>
-            <td>{{ item.validade }}</td>
-            <td>{{ '[ ! ] Vencimento Próximo' if item.alerta_critico else 'Normal' }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <h1>Painel Logístico FIFO - Mãos Estendidas</h1>
+        <div class="alerta-resumo"><strong>Demandas Críticas:</strong> Priorizar saída dos lotes marcados abaixo.</div>
+        <table>
+            <tr><th>Item</th><th>Saldo</th><th>Validade</th><th>Status</th></tr>
+            {% for item in itens %}
+            <tr class="{{ 'critico' if item.alerta_critico else '' }}">
+                <td>{{ item.nome }}</td>
+                <td>{{ item.quantidade }} un</td>
+                <td>{{ item.validade }}</td>
+                <td>
+                    {% if item.alerta_critico %}
+                        <span class="badge-critico">[ ! ] Vencimento Próximo</span>
+                    {% else %}
+                        <span class="badge-normal">Normal</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="form-box">
+            <h2>+ Registrar Nova Doação</h2>
+            <form method="POST" action="/movimentar">
+                <input type="text" name="nome" placeholder="Nome do Produto (ex: Leite Integral)" required>
+                <select name="categoria">
+                    <option value="Alimento">Alimento</option>
+                    <option value="Higiene">Higiene</option>
+                </select>
+                <input type="number" name="quantidade" placeholder="Quantidade" min="1" required>
+                <input type="date" name="validade" required>
+                <button type="submit">SALVAR ENTRADA NO ESTOQUE</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
