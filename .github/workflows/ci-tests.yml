@@ -26,4 +26,4 @@ jobs:
 
     - name: Executar Pytest com Relatório de Cobertura
       run: |
-        pytest --cov=app --cov-report=term-missing
+        PYTHONPATH=. pytest --cov=app --cov-report=term-missing
