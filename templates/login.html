@@ -4,15 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGIC - Login Seguro</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+        }
+        h1 { font-size: 20px; color: #1e293b; margin-bottom: 4px; }
+        p { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+        .campo { text-align: left; margin-bottom: 16px; }
+        label { display: block; font-size: 14px; font-weight: bold; color: #334155; margin-bottom: 6px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        button {
+            width: 100%;
+            min-height: 48px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        button:hover { background-color: #1d4ed8; }
+    </style>
 </head>
 <body>
-    <h1>Acesso ao Estoque - Mãos Estendidas</h1>
-    <form method="POST" action="/">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit" style="min-height: 48px; width: 100%;">ENTRAR</button>
-    </form>
+    <div class="card">
+        <h1>MÃOS ESTENDIDAS</h1>
+        <p>Gestão de Inventário Comunitário</p>
+        <form method="POST" action="/">
+            <div class="campo">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" name="username" value="voluntario_01" required>
+            </div>
+            <div class="campo">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" value="senha_teste_123" required>
+            </div>
+            <button type="submit">ENTRAR</button>
+        </form>
+    </div>
 </body>
 </html>
